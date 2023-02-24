@@ -1,9 +1,16 @@
 #include <iostream>
 #include <cstdlib>
+#include <fstream>
+#include <string>
 
 using namespace std;
 int main()
 {
+	std::ofstream out;
+	std::string line;
+	std::ifstream in("C:\\SMconsoletest\\bd.txt"); // окрываем файл для чтения
+	out.open("C:\\SMconsoletest\\bd.txt"); // окрываем файл для записи
+	
     string command;
     string question;
     string language;
@@ -15,7 +22,7 @@ int main()
     
     // check
     if (command == "version" || command == "ver" || command == "vers") {
-        cout << "\nVersion of the console: 0.7";
+        cout << "\nVersion of the console: 0.8";
     }
     if (command == "clear" || command == "clr") {
         system("cls");
@@ -128,6 +135,30 @@ int main()
             cout << "\n6 step: Go to the downloaded archive, open the '01 default' folder, and copy the files to the 'overviews' folder, replacing the files in the destination";
             cout << "\nFor normal radar display, play at resolutions of 1024 or higher.";
         }
+		if (question == "Rankmanager" || question == "RankManager" || question == "Rank manager" || question == "Rank Manager" || question == "Rkm" || question == "rkm") {
+			string rank;
+			cout << "What's your rank in csgo (take titles from the site: https://cyber.sports.ru/cs/1095036046.html in English): ";
+			cin >> rank;
+			if (out.is_open()) {
+				out << rank << std::endl;
+			}
+			in.close(); // закрываем файл
+		}
+		if (question == "My Rank" || question == "my Rank" || question == "My rank" || question == "MyRank" || question == "myRank" || question == "Myrank" || question == "MR" || question == "mr") {
+			string curr_rank;
+			
+			if (in.is_open()) {
+				while (getline(in, line)) {
+					//std::cout << line << std::endl;
+					curr_rank = line;
+				}
+			}
+			
+			cout << "Your rank: " << curr_rank;
+		}
     }
+    if (command == "Help" || command == "help" || command == "hlp") {
+		cout << "Commands: ver (version), rnd (random number), gnrc (generate code (print (print code))), que (programming question), rbs (roblox scripts), clc (simple calculator), lc++ (learn c++), cr (credits), csgo(questions and tutorials about csgo)";
+	}
     return 0;
 }
